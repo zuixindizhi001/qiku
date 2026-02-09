@@ -1,91 +1,99 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta name="baidu-analysis-id" content="1l3038331e322w1i">
     <meta charset="utf-8">
     <meta name="Author" content="Noah">
-    <meta name="Keywords" content="映像星球,发布页,最新地址,APP下载,影视APP下载"> <meta name="Description" content="映像星球永久发布页 - 获取最新官网地址和APP下载链接。"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="/favicon.ico"> <title>映像星球APP下载-映像星球永久发布页</title>
+    <meta name="Keywords" content="映像星球,发布页,最新地址"> 
+    <meta name="Description" content="映像星球永久发布页 - 获取最新官网地址。"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/favicon.ico"> 
+    <title>映像星球-永久发布页</title>
 
-    <link href="css/normalize.css" rel="stylesheet"> <link href="https://fonts.cdnfonts.com/css/opposans" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet"> <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="css/normalize.css" rel="stylesheet"> 
+    <link href="https://fonts.cdnfonts.com/css/opposans" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet"> 
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/clipboard.min.js"></script>
     <style>
-        /* --- 保留你原始代码中的内联样式 --- */
-        /* === Logo Size Control === */
-        .header img {
-            width: 150px;  /* <<<--- ADJUST THIS VALUE to your desired logo width */
-            height: auto;
+        /* 布局调整：将左侧面板居中，删除右侧空间 */
+        .panel-content {
+            display: flex;
+            justify-content: center; /* 居中 */
+            gap: 0;
+        }
+        .panel-left {
+            width: 100%;
+            max-width: 600px; /* 限制宽度，防止在PC端过宽 */
+        }
+
+        /* 顶部导航提醒样式 */
+        .nav-notice {
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 75, 43, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .nav-notice p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .nav-notice strong {
             display: block;
+            font-size: 22px;
+            margin: 5px 0;
+            letter-spacing: 1px;
         }
-
-        /* === Domain URL Display Color === */
-        .panel-left .panel-box .row .text p.p2 {
-            font-size: 12px;
-            line-height: 16px;
-            letter-spacing: 0.07em;
-            color: #bdbdbd; /* Light gray */
-            opacity: 1;
-            word-break: break-all;
-        }
-
-        /* === Speed Test Result Display === */
-        .speed-result {
-            font-size: 11px;
-            color: #ccc;
-            min-width: 95px;  /* Adjusted width for new text format */
-            display: inline-block;
-            text-align: left; /* Changed to left alignment */
+        .btn-copy-nav {
+            background: white;
+            color: #ff4b2b;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
             font-weight: bold;
-            margin-right: 8px;
-            /* vertical-align removed, use flex alignment in container */
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 5px;
+            transition: all 0.3s;
         }
+        .btn-copy-nav:hover {
+            transform: scale(1.05);
+            background: #fdfdfd;
+        }
+
+        /* 二维码部分调整 */
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        .qr-img {
+            width: 140px;
+            height: 140px;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        /* 原始样式保留 */
+        .header img { width: 150px; height: auto; display: block; }
+        .speed-result { font-size: 11px; color: #ccc; min-width: 95px; display: inline-block; font-weight: bold; margin-right: 8px;}
         .speed-result.testing { color: #ffc107; }
         .speed-result.success { color: #28a745; }
         .speed-result.error   { color: #dc3545; }
-
-        /* === Layout Adjustments === */
-        .action-area {
-            display: flex;
-            align-items: center;
-            gap: 0px; /* Buttons usually have their own padding */
-            margin-left: auto;
-            flex-shrink: 0;
-        }
-
-        .panel-left .panel-box .row {
-            height: auto;
-            min-height: 70px;
-            display: flex;
-            padding: 10px 20px;
-            width: 100%;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .panel-left .panel-box .row .text {
-           flex-grow: 1;
-           display: flex;
-           flex-direction: column;
-           gap: 2px;
-           margin-right: 10px;
-           min-width: 150px;
-        }
-        /* url-speed-group div was removed */
-
+        .action-area { display: flex; align-items: center; margin-left: auto; flex-shrink: 0; }
+        .panel-left .panel-box .row { height: auto; min-height: 70px; display: flex; padding: 10px 20px; width: 100%; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .panel-left .panel-box .row .text { flex-grow: 1; display: flex; flex-direction: column; gap: 2px; margin-right: 10px; min-width: 150px; }
+        .panel-left .panel-box .row .text p.p2 { font-size: 12px; color: #bdbdbd; word-break: break-all; }
     </style>
 
     <script>
-        // 保留你原始的 JS 辅助函数
-        function toUrl(url, msg = '') {
-            if (msg) { alert(msg); }
-            // 增强 URL 检查
-            if (url && typeof url === 'string' && url.toLowerCase().trim() !== 'javascript:;' && url.trim().startsWith('http')) {
-                window.location.href = url;
-            } else if (!msg) { console.warn("toUrl called with invalid URL:", url); }
-        }
-        function copyBtn() { /* 保留占位符，实际由 ClipboardJS 处理 */ }
+        function copyBtn() { /* ClipboardJS 处理 */ }
     </script>
 </head>
 <body>
@@ -93,313 +101,122 @@
     <div class="page-mark"></div>
     <div class="page-center">
         <div class="header">
-            <img alt="Logo" src="img/1.png" style="width: 210px; height: 60px;">> </div>
+            <img alt="Logo" src="img/bea51e2dca5dd1ac3e782268ec5303cf.png" style="width: 210px; height: 60px;">
+        </div>
         <div class="top-line"></div>
+
         <div class="panel-content">
             <div class="panel-left">
+                <!-- 新增：明显导航提示 -->
+                <div class="nav-notice">
+                    <p>务必保存，永久导航域名</p>
+                    <strong id="nav-url">yxxq.site</strong>
+                    <button class="btn-copy-nav" data-clipboard-text="yxxq.site" onclick="alert('导航域名 yxxq.site 复制成功！请粘贴至浏览器收藏夹。')">点击复制并收藏</button>
+                </div>
+
                 <div class="title-info">
-                    <div class="title-i"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="0.4" clip-path="url(#clip0_157_14557)"><path d="M12 22C6.477 22 2 17.523 2 12C2 6.47703 6.477 2.00003 12 2.00003C17.523 2.00003 22 6.47703 22 12C22 17.523 17.523 22 12 22ZM9.71 19.667C8.72341 17.5743 8.15187 15.3102 8.027 13H4.062C4.25659 14.5389 4.89392 15.9882 5.89657 17.1717C6.89922 18.3553 8.22401 19.2222 9.71 19.667ZM10.03 13C10.181 15.439 10.878 17.73 12 19.752C13.1523 17.6766 13.8254 15.3695 13.97 13H10.03ZM19.938 13H15.973C15.8481 15.3102 15.2766 17.5743 14.29 19.667C15.776 19.2222 17.1008 18.3553 18.1034 17.1717C19.1061 15.9882 19.7434 14.5389 19.938 13ZM4.062 11H8.027C8.15187 8.68982 8.72341 6.42572 9.71 4.33303C8.22401 4.77791 6.89922 5.64478 5.89657 6.82833C4.89392 8.01187 4.25659 9.46113 4.062 11ZM10.031 11H13.969C13.8248 8.63063 13.152 6.32356 12 4.24803C10.8477 6.32348 10.1746 8.63055 10.03 11H10.031ZM14.29 4.33303C15.2766 6.42572 15.8481 8.68982 15.973 11H19.938C19.7434 9.46113 19.1061 8.01187 18.1034 6.82833C17.1008 5.64478 15.776 4.77791 14.29 4.33303Z" fill="white"></path></g><defs><clipPath id="clip0_157_14557"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg></div>
-                    <div class="title-t">Ctrl+D 收藏浏览器</div>
+                    <div class="title-i"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="0.4" clip-path="url(#clip0_157_14557)"><path d="M12 22C6.477 22 2 17.523 2 12C2 6.47703 6.477 2.00003 12 2.00003C17.523 2.00003 22 6.47703 22 12C22 17.523 17.523 22 12 22ZM9.71 19.667C8.72341 17.5743 8.15187 15.3102 8.027 13H4.062C4.25659 14.5389 4.89392 15.9882 5.89657 17.1717C6.89922 18.3553 8.22401 19.2222 9.71 19.667ZM10.03 13C10.181 15.439 10.878 17.73 12 19.752C13.1523 17.6766 13.8254 15.3695 13.97 13H10.03ZM19.938 13H15.973C15.8481 15.3102 15.2766 17.5743 14.29 19.667C15.776 19.2222 17.1008 18.3553 18.1034 17.1717C19.1061 15.9882 19.7434 14.5389 19.938 13ZM4.062 11H8.027C8.15187 8.68982 8.72341 6.42572 9.71 4.33303C8.22401 4.77791 6.89922 5.64478 5.89657 6.82833C4.89392 8.01187 4.25659 9.46113 4.062 11ZM10.031 11H13.969C13.8248 8.63063 13.152 6.32356 12 4.24803C10.8477 6.32348 10.1746 8.63055 10.03 11H10.031ZM14.29 4.33303C15.2766 6.42572 15.8481 8.68982 15.973 11H19.938C19.7434 9.46113 19.1061 8.01187 18.1034 6.82833C17.1008 5.64478 15.776 4.77791 14.29 4.33303Z" fill="white"></path></g></svg></div>
+                    <div class="title-t">快捷访问列表</div>
                 </div>
                 <div class="panel-box">
+                    <!-- 第一行：复制发布页链接 -->
                     <div class="row">
                         <div class="text">
-                            <p class="p1">将网址分享给好友 <span class="p1span2">推荐</span></p>
-                            <p class="p2" id="share-url">https://</p> </div>
-                        <div class="action-area">
-                            <span class="speed-result"></span>
-                            <a id="copy-share-link" onclick="copyBtn()" href="https://" class="btn">复制链接</a> </div>
-                    </div>
-                    <div class="top-line nomp"></div>
-                    <div class="row">
-                        <div class="text">
-                            <p class="p1">映像星球主域名<span class="p1span">主用</span></p>
-                            <p class="p2">https://</p>
+                            <p class="p1">将本站地址分享给好友</p>
+                            <p class="p2" id="share-url">加载中...</p> 
                         </div>
                         <div class="action-area">
                             <span class="speed-result"></span>
-                            <a href="https://" target="_blank" class="btn-down">点击进入</a>
+                            <a id="copy-share-link" href="#" class="btn">复制链接</a> 
                         </div>
                     </div>
+                    
+                    <!-- 动态域名行将通过 JS 插入到这里 -->
+                    <div id="dynamic-rows"></div>
+
+                    <!-- 固定二维码区域 -->
                     <div class="top-line nomp"></div>
-                    <div class="row">
-                        <div class="text">
-                            <p class="p1">映像星球备用网址1<span class="p1span">备用</span></p>
-                            <p class="p2">https://</p>
-                        </div>
-                         <div class="action-area">
-                            <span class="speed-result"></span>
-                            <a href="https:///" target="_blank" class="btn-down">点击进入</a>
-                        </div>
+                    <div class="qr-section">
+                        <img src="img/qr.png" alt="二维码" class="qr-img">
+                        <div style="margin-top: 10px; font-size: 12px; color: white;">长按保存二维码或扫描访问</div>
                     </div>
-                    <div class="top-line nomp"></div>
-                    <div class="row">
-                        <div class="text">
-                            <p class="p1">映像星球备用网址2</p>
-                            <p class="p2">https://</p>
-                        </div>
-                        <div class="action-area">
-                            <span class="speed-result"></span>
-                            <a href="javascript:;" target="_blank" class="btn-down">点击进入</a>
-                        </div>
-                    </div>
-                    <div class="top-line nomp"></div>
-                    <div class="row">
-                        <div class="text">
-                            <p class="p1">映像星球备用网址3</p>
-                            <p class="p2">https://</p>
-                        </div>
-                        <div class="action-area">
-                            <span class="speed-result"></span>
-                            <a href="https://" target="_blank" class="btn-down">点击进入</a>
-                        </div>
-                    </div>
-                </div> </div> <div class="panel-right">
-                <div class="title-info">
-                    <div class="title-i"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <g opacity="0.4" clip-path="url(#clip0_170_20821)"><path d="M7 4V20H17V4H7ZM6 2H18C18.2652 2 18.5196 2.10536 18.7071 2.29289C18.8946 2.48043 19 2.73478 19 3V21C19 21.2652 18.8946 21.5196 18.7071 21.7071C18.5196 21.8946 18.2652 22 18 22H6C5.73478 22 5.48043 21.8946 5.29289 21.7071C5.10536 21.5196 5 21.2652 5 21V3C5 2.73478 5.10536 2.48043 5.29289 2.29289C5.48043 2.10536 5.73478 2 6 2ZM12 17C12.2652 17 12.5196 17.1054 12.7071 17.2929C12.8946 17.4804 13 17.7348 13 18C13 18.2652 12.8946 18.5196 12.7071 18.7071C12.5196 18.8946 12.2652 19 12 19C11.7348 19 11.4804 18.8946 11.2929 18.7071C11.1054 18.5196 11 18.2652 11 18C11 17.7348 11.1054 17.4804 11.2929 17.2929C11.4804 17.1054 11.7348 17 12 17Z" fill="white"></path></g><defs><clipPath id="clip0_170_20821"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg></div>
-                    <div class="title-t">APP下载</div>
-                </div>
-                <div class="panel-box">
-                         <div class="row">
-                             <div class="icon-text">
-                                 <svg class="ico" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="34" height="34" rx="17" fill="#74B969"></rect><g clip-path="url(#clip0_170_20832)"><path d="M22.9503 17.8499H11.0503V23.7999H22.9503V17.8499ZM22.9503 16.1499C22.9503 14.5719 22.3235 13.0585 21.2076 11.9427C20.0918 10.8268 18.5784 10.1999 17.0003 10.1999C15.4223 10.1999 13.9089 10.8268 12.7931 11.9427C11.6772 13.0585 11.0503 14.5719 11.0503 16.1499H22.9503ZM12.225 10.1727C13.5797 9.08735 15.2645 8.49718 17.0003 8.49995C18.8066 8.49995 20.4666 9.12555 21.7756 10.1727L23.0107 8.9377L24.2126 10.1396L22.9775 11.3746C24.0629 12.7293 24.6531 14.4141 24.6503 16.1499V24.6499C24.6503 24.8754 24.5608 25.0916 24.4014 25.251C24.242 25.4104 24.0258 25.4999 23.8003 25.4999H10.2003C9.97491 25.4999 9.75871 25.4104 9.5993 25.251C9.4399 25.0916 9.35034 24.8754 9.35034 24.6499V16.1499C9.35034 14.3437 9.97594 12.6836 11.0231 11.3746L9.78809 10.1404L10.99 8.93855L12.225 10.1736V10.1727ZM14.4503 14.4499C14.2249 14.4499 14.0087 14.3604 13.8493 14.201C13.6899 14.0416 13.6003 13.8254 13.6003 13.5999C13.6003 13.3745 13.6899 13.1583 13.8493 12.9989C14.0087 12.8395 14.2249 12.7499 14.4503 12.7499C14.6758 12.7499 14.892 12.8395 15.0514 12.9989C15.2108 13.1583 15.3003 13.3745 15.3003 13.5999C15.3003 13.8254 15.2108 14.0416 15.0514 14.201C14.892 14.3604 14.6758 14.4499 14.4503 14.4499ZM19.5503 14.4499C19.3249 14.4499 19.1087 14.3604 18.9493 14.201C18.7899 14.0416 18.7003 13.8254 18.7003 13.5999C18.7003 13.3745 18.7899 13.1583 18.9493 12.9989C19.1087 12.8395 19.3249 12.7499 19.5503 12.7499C19.7758 12.7499 19.992 12.8395 20.1514 12.9989C20.3108 13.1583 20.4003 13.3745 20.4003 13.5999C20.4003 13.8254 20.3108 14.0416 20.1514 14.201C19.992 14.3604 19.7758 14.4499 19.5503 14.4499Z" fill="white"></path></g><defs><clipPath id="clip0_170_20832"><rect width="20.4" height="20.4" fill="white" transform="translate(6.80005 6.79999)"></rect></clipPath></defs></svg>
-                                 <p class="p1">安卓下载地址</p>
-                             </div>
-                             <a id="android-download-link" href="#" target="_blank" class="btn-down">
-                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_170_20780)"><path d="M8.66658 6.66667H11.9999L7.99992 10.6667L3.99992 6.66667H7.33325V2H8.66658V6.66667ZM2.66659 12.6667H13.3333V8H14.6666V13.3333C14.6666 13.5101 14.5963 13.6797 14.4713 13.8047C14.3463 13.9298 14.1767 14 13.9999 14H1.99992C1.82311 14 1.65354 13.9298 1.52851 13.8047C1.40349 13.6797 1.33325 13.5101 1.33325 13.3333V8H2.66659V12.6667Z" fill="white"></path></g><defs><clipPath id="clip0_170_20780"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>
-                             </a>
-                         </div>
-                         <div class="top-line nomp"></div>
-                         <div class="row">
-                             <div class="icon-text">
-                                  <svg class="ico" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><rect y="0.200027" width="33.6" height="33.6" rx="16.8" fill="black"></rect><path d="M19.9073 12.8401C19.5131 12.8092 19.0898 12.9034 18.4415 13.1509C18.4965 13.1301 17.8231 13.3926 17.6348 13.4592C17.2165 13.6051 16.8723 13.6851 16.4865 13.6851C16.1048 13.6851 15.7531 13.6084 15.3481 13.4726C15.219 13.4284 15.089 13.3809 14.9273 13.3176C14.859 13.2909 14.609 13.1909 14.554 13.1701C14.014 12.9584 13.7098 12.8784 13.4573 12.8851C12.4973 12.8976 11.5881 13.4517 11.0606 14.3701C9.98398 16.2401 10.5798 19.6192 12.154 21.8959C12.9923 23.0992 13.4506 23.5292 13.6356 23.5234C13.8206 23.5151 13.9565 23.4759 14.2881 23.3359L14.4273 23.2767C15.2648 22.9192 15.8523 22.7617 16.7365 22.7617C17.5873 22.7617 18.1556 22.9167 18.9598 23.2634L19.0998 23.3234C19.4315 23.4651 19.5515 23.4967 19.7598 23.4917C20.0581 23.4876 20.4256 23.1442 21.2415 21.9467C21.4648 21.6209 21.6623 21.2776 21.8331 20.9301C21.7209 20.8376 21.6119 20.7411 21.5065 20.6409C20.4323 19.6176 19.7681 18.2376 19.7498 16.5326C19.7319 15.271 20.1465 14.0414 20.9248 13.0484C20.5982 12.9278 20.2551 12.8576 19.9073 12.8401ZM20.0365 11.1784C20.6265 11.2184 22.3165 11.3984 23.4165 13.0084C23.3265 13.0584 21.3965 14.1784 21.4165 16.5184C21.4465 19.3184 23.8665 20.2484 23.8965 20.2584C23.8765 20.3284 23.5065 21.5884 22.6165 22.8884C21.8465 24.0184 21.0465 25.1384 19.7865 25.1584C18.5465 25.1884 18.1465 24.4284 16.7365 24.4284C15.3165 24.4284 14.8765 25.1384 13.7065 25.1884C12.4865 25.2284 11.5665 23.9684 10.7865 22.8484C9.19648 20.5484 7.98648 16.3684 9.61648 13.5384C10.4265 12.1284 11.8665 11.2384 13.4365 11.2184C14.6265 11.1884 15.7565 12.0184 16.4865 12.0184C17.2065 12.0184 18.4965 11.0584 20.0365 11.1784ZM19.0865 9.6584C18.4365 10.4384 17.3765 11.0484 16.3465 10.9684C16.2065 9.9084 16.7265 8.7984 17.3265 8.1084C17.9965 7.3284 19.1165 6.7484 20.0465 6.7084C20.1665 7.7884 19.7365 8.8784 19.0865 9.6584Z" fill="white"></path></svg>
-                                 <p class="p1">iOS下载地址</p>
-                             </div>
-                             <div class="link-group">
-                                <a id="ios-download-link" href="#" target="_blank" class="btn-down"> 点击安装 </a>
-                             </div>
-                          </div> <div class="top-line"></div> <div style="display: flex; flex-direction: column; align-items: center; padding-top: 0px; margin-bottom: 15px;">
-                     </div>
-                <div style="display: flex; flex-direction: column; align-items: center; padding-top: 0px; margin-bottom: 15px; width: 100%;">
-                    <div id="qrcode-container" style="background-color: white; padding: 10px; border-radius: 8px; display: inline-block; width: 140px; height: 140px;">
-                        </div>
-                    <div class="btnercode" style="margin-top: 10px; font-size: 12px; color: white; text-align: center;">扫描二维码访问本站</div>
-                </div>
-                    </div> </div> </div> <div class="foot">
+                </div> 
+            </div> 
+        </div> 
+
+        <div class="foot">
             ©2025 映像星球. All Rights Reserved
         </div>
-    </div> </div> <script src="js/domains.js"></script>
+    </div> 
+</div> 
+
+<script src="js/domains.js"></script>
 <script>
-    // --- 辅助函数区 (保留原始的 shuffleArray 和 runSpeedTest) ---
-    function shuffleArray(array) { /* Fisher-Yates Shuffle */
+    function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; }
     }
 
     async function runSpeedTest(rowElement) {
-        const resultSpan = rowElement.querySelector('.action-area .speed-result');
-        const targetLink = rowElement.querySelector('a.btn-down, a.btn');
-        let urlToTest = '';
+        const resultSpan = rowElement.querySelector('.speed-result');
+        const targetLink = rowElement.querySelector('a');
+        let urlToTest = targetLink.href;
 
-        if (targetLink && targetLink.href && !targetLink.href.startsWith('javascript:')) { urlToTest = targetLink.href; }
-        else { const urlElement = rowElement.querySelector('.text p.p2'); if(urlElement) urlToTest = urlElement.textContent.trim(); }
-
-        if (!urlToTest || !urlToTest.startsWith('http')) {
-            if (resultSpan) { resultSpan.textContent = '无效链接'; resultSpan.className = 'speed-result error'; } // 更新错误提示
-            console.error('无效URL无法测速:', urlToTest, rowElement); return;
-        }
-        if (resultSpan) { resultSpan.textContent = '测速中...'; resultSpan.className = 'speed-result testing'; } // 更新等待提示
+        if (!urlToTest || !urlToTest.startsWith('http')) return;
+        
+        resultSpan.textContent = '测速中...';
+        resultSpan.className = 'speed-result testing';
 
         const startTime = performance.now();
-        const timeout = 5000;
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout);
-        const cacheBustUrl = urlToTest.split('#')[0] + (urlToTest.includes('?') ? '&' : '?') + '_t=' + Date.now();
-
         try {
-            await fetch(cacheBustUrl, { method: 'HEAD', mode: 'no-cors', signal: controller.signal, cache: 'no-store' });
-            clearTimeout(timeoutId);
-            const endTime = performance.now();
-            const duration = endTime - startTime;
-            const displayDuration = Math.max(10, Math.floor(duration)); // 保证最小显示10ms
-
-            if (resultSpan) {
-                resultSpan.textContent = `延迟 ${displayDuration} ms`; // 更新显示格式
-                resultSpan.className = 'speed-result success';
-            }
+            const controller = new AbortController();
+            setTimeout(() => controller.abort(), 5000);
+            await fetch(urlToTest, { method: 'HEAD', mode: 'no-cors', signal: controller.signal });
+            const duration = Math.max(10, Math.floor(performance.now() - startTime));
+            resultSpan.textContent = `延迟 ${duration} ms`;
+            resultSpan.className = 'speed-result success';
         } catch (err) {
-            clearTimeout(timeoutId);
-            if (resultSpan) {
-                if (err.name === 'AbortError') { resultSpan.textContent = '请求超时'; }
-                else { resultSpan.textContent = '访问失败'; console.error("测速失败:", urlToTest, err); } // 更新错误提示
-                resultSpan.className = 'speed-result error';
-            }
-        }
-    } // --- End of runSpeedTest function ---
-
-    // --- ▼▼▼ 修改3：新增一个函数，用于加载APP下载地址 ▼▼▼ ---
-    async function loadAppUrls() {
-        try {
-            // 请求 app_urls.txt 文件
-            const response = await fetch('app_urls.txt?v=' + Date.now()); // 添加时间戳防止缓存
-            if (!response.ok) {
-                throw new Error('网络响应错误，无法获取下载地址文件。');
-            }
-            const data = await response.json(); // 解析为JSON
-
-            // 找到对应的下载按钮
-            const androidLink = document.getElementById('android-download-link');
-            const iosLink = document.getElementById('ios-download-link');
-
-            // 更新安卓按钮的链接
-            if (androidLink && data.android_url) {
-                androidLink.href = data.android_url;
-            } else {
-                console.error('未找到安卓下载链接元素或URL数据。');
-            }
-            
-            // 更新iOS按钮的链接
-            if (iosLink && data.ios_url) {
-                iosLink.href = data.ios_url;
-            } else {
-                console.error('未找到iOS下载链接元素或URL数据。');
-            }
-
-        } catch (error) {
-            console.error('加载APP下载地址失败:', error);
-            // 如果加载失败，可以给用户一个提示
-            const androidLink = document.getElementById('android-download-link');
-            const iosLink = document.getElementById('ios-download-link');
-            if(androidLink) androidLink.href = 'javascript:alert("下载地址加载失败，请刷新页面重试！");';
-            if(iosLink) iosLink.href = 'javascript:alert("下载地址加载失败，请刷新页面重试！");';
+            resultSpan.textContent = '访问超时';
+            resultSpan.className = 'speed-result error';
         }
     }
-    // --- ▲▲▲ 新增函数结束 ▲▲▲ ---
 
-    // --- 页面加载完成后执行的主逻辑 ---
     document.addEventListener('DOMContentLoaded', function() {
-        // ▼▼▼ 修改4：在页面加载时调用新增的函数 ▼▼▼
-        loadAppUrls();
+        // 初始化导航域名复制
+        new ClipboardJS('.btn-copy-nav');
 
-        // 检查域名列表
-        if (typeof domainList === 'undefined' || !Array.isArray(domainList) || domainList.length === 0) {
-            console.error('错误: 域名列表 (domainList) 未定义或为空。请检查 domains.js 文件。');
-            document.querySelectorAll('.panel-left .panel-box .row .text p.p2').forEach(p => p.textContent = '域名加载失败');
-            document.querySelectorAll('.panel-left .panel-box .row .action-area .speed-result').forEach(s => { s.textContent = '错误'; s.className = 'speed-result error'; });
-            return;
-        }
+        // 设置当前页面分享链接
+        const currentUrl = window.location.href;
+        document.getElementById('share-url').textContent = currentUrl;
+        const copyShare = new ClipboardJS('#copy-share-link', { text: () => currentUrl });
+        copyShare.on('success', () => alert('发布页链接复制成功！'));
 
-        let shuffledDomains = [...domainList];
-        shuffleArray(shuffledDomains);
+        // 加载域名列表
+        if (typeof domainList !== 'undefined' && domainList.length > 0) {
+            const container = document.getElementById('dynamic-rows');
+            let shuffled = [...domainList];
+            shuffleArray(shuffled);
 
-        const urlRows = document.querySelectorAll('.panel-left .panel-box .row');
-        if (urlRows.length === 0) { console.warn('警告: 未找到需要填充域名的行。'); return; }
-
-        let domainIndex = 0;
-        function getNextDomain() {
-            if (domainIndex >= shuffledDomains.length) { domainIndex = 0; }
-            const domain = shuffledDomains[domainIndex++];
-            return (domain && typeof domain === 'string' && domain.trim().startsWith('http')) ? domain.trim() : null; // 增强检查
-        }
-
-        const rowsToTest = [];
-        let firstValidUrlAssigned = false;
-
-        // 遍历行，填充域名和链接
-        urlRows.forEach((row, index) => {
-            const p2 = row.querySelector('.text p.p2');
-            const link = row.querySelector('a.btn, a.btn-down');
-            const speedSpan = row.querySelector('.action-area .speed-result');
-
-            if (!p2 || !link || !speedSpan) { console.warn(`第 ${index + 1} 行: 结构不完整，跳过。`); return; }
-
-            speedSpan.textContent = ''; speedSpan.className = 'speed-result'; // 重置测速
-
-            if (index === 0) {
-                const shareUrlElement = document.getElementById('share-url');
-                const copyLinkElement = document.getElementById('copy-share-link');
-                const currentWebUrl = window.location.href;
-
-                if (shareUrlElement) shareUrlElement.textContent = currentWebUrl;
-                 else p2.textContent = currentWebUrl;
-
-                 if (copyLinkElement) {
-                     copyLinkElement.href = currentWebUrl;
-                     try {
-                         const clipboardShare = new ClipboardJS(copyLinkElement, {
-                             text: function(trigger) { return trigger.getAttribute('href'); }
-                         });
-                         clipboardShare.on('success', e => { alert('发布页链接复制成功: ' + e.text); e.clearSelection(); });
-                         clipboardShare.on('error', e => { alert('复制失败，请手动复制'); });
-                     } catch(e) { console.error("初始化分享链接复制功能失败:", e);}
-                 } else { link.href = currentWebUrl; }
-
-                 rowsToTest.push({element: row, url: currentWebUrl});
-
-            } else {
-                 const randomUrl = getNextDomain();
-                 if (randomUrl) {
-                     p2.textContent = randomUrl;
-                     link.href = randomUrl;
-                     rowsToTest.push({element: row, url: randomUrl});
-                 } else {
-                     p2.textContent = '无可用域名';
-                     link.href = 'javascript:;';
-                     speedSpan.textContent = '错误';
-                     speedSpan.className = 'speed-result error';
-                 }
-            }
-        });
-
-        // 开始测速
-        if(rowsToTest.length > 0) {
-            console.log(`开始自动测试 ${rowsToTest.length} 个链接...`);
-            rowsToTest.forEach((item, i) => {
-                 setTimeout(() => { runSpeedTest(item.element); }, i * 200); // 增加延迟
+            shuffled.slice(0, 4).forEach((domain, index) => {
+                const row = document.createElement('div');
+                row.className = 'row-wrapper';
+                row.innerHTML = `
+                    <div class="top-line nomp"></div>
+                    <div class="row">
+                        <div class="text">
+                            <p class="p1">备用网址 ${index + 1} ${index===0?'<span class="p1span">推荐</span>':''}</p>
+                            <p class="p2">${domain}</p>
+                        </div>
+                        <div class="action-area">
+                            <span class="speed-result"></span>
+                            <a href="${domain}" target="_blank" class="btn-down">点击进入</a>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+                setTimeout(() => runSpeedTest(row), index * 300);
             });
         }
-
-        // --- 生成当前页面的二维码的函数定义 ---
-        function generateCurrentPageQRCode() {
-            const qrContainer = document.getElementById("qrcode-container");
-            if (qrContainer) {
-                qrContainer.innerHTML = ''; // 清空
-                try {
-                    new QRCode(qrContainer, {
-                        text: window.location.href, // 使用当前页面URL
-                        width: 120,
-                        height: 120,
-                        colorDark : "#000000",
-                        colorLight : "#ffffff",
-                        correctLevel : QRCode.CorrectLevel.H
-                    });
-                } catch (e) {
-                    console.error("生成二维码失败:", e);
-                    qrContainer.innerHTML = '<p style="color:red; font-size:11px; text-align: center; margin: 40px 0;">二维码<br>生成失败</p>';
-                }
-            } else {
-                console.error("未找到ID为 'qrcode-container' 的元素。");
-            }
-        }
-
-        // --- 调用生成二维码函数 ---
-        generateCurrentPageQRCode();
-
-    }); // End of DOMContentLoaded listener
+    });
 </script>
-
-<script> var _mtj = _mtj || []; (function () { var mtj = document.createElement("script"); mtj.src = "https://node12.aizhantj.com:21233/tjjs/?k=8wloqducq6o"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(mtj, s); })(); </script>
-
-<script defer src="https://tongji.go4321.top/random-string.js" data-website-id="fb46b58e-0866-4933-87fe-35c1e8d68617"></script>
-
-   <script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4948061,4,0,0,0,00010000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4948061&101" alt="" border="0"></a></noscript>
 </body>
 </html>
