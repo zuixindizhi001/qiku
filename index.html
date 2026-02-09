@@ -3,8 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="Author" content="Noah">
-    <meta name="Keywords" content="映像星球,发布页,最新地址"> 
-    <meta name="Description" content="映像星球永久发布页 - 获取最新官网地址。"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="/favicon.ico"> 
     <title>映像星球-永久发布页</title>
@@ -14,7 +12,7 @@
     <link href="css/index.css" rel="stylesheet"> 
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/clipboard.min.js"></script>
     <style>
-        /* 页面居中布局 */
+        /* 布局居中 */
         .panel-content { display: flex; justify-content: center; }
         .panel-left { width: 100%; max-width: 550px; }
 
@@ -58,33 +56,27 @@
             gap: 10px;
         }
         .panel-left .panel-box .row .text { flex: 1; min-width: 0; }
+        .panel-left .panel-box .row .text p.p1 { font-size: 14px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
         .panel-left .panel-box .row .text p.p2 { 
             font-size: 12px; 
             color: #bdbdbd; 
             overflow: hidden; 
             text-overflow: ellipsis; 
             white-space: nowrap; 
+            margin: 0;
         }
 
         /* 按钮组样式 */
-        .action-area { 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            flex-shrink: 0;
-        }
-        /* 复制按钮样式 */
+        .action-area { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .btn-mini-copy {
             background: rgba(255,255,255,0.1);
             color: #fff;
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
-            text-decoration: none;
             border: 1px solid rgba(255,255,255,0.2);
             cursor: pointer;
         }
-        /* 进入按钮样式 */
         .btn-mini-enter {
             background: #007bff;
             color: #fff;
@@ -95,7 +87,8 @@
             cursor: pointer;
         }
 
-        .speed-result { font-size: 10px; min-width: 60px; text-align: right; font-weight: bold; }
+        /* 测速显示 */
+        .speed-result { font-size: 10px; min-width: 50px; text-align: right; font-weight: bold; }
         .speed-result.testing { color: #ffc107; }
         .speed-result.success { color: #28a745; }
         .speed-result.error   { color: #dc3545; }
@@ -112,18 +105,27 @@
         .qr-text { margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.5); }
         
         .header img { width: 210px; height: 60px; display: block; margin: 0 auto; }
+        
+        /* 推荐标签样式 */
+        .p1span-rec {
+            background: #ff4b2b;
+            color: white;
+            font-size: 10px;
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
 <div class="page-body">
     <div class="page-mark"></div>
     <div class="page-center">
-        <div class="header"><img alt="Logo" src="img/bea51e2dca5dd1ac3e782268ec5303cf.png"></div>
+        <div class="header"><img alt="Logo" src="img/1.png"></div>
         <div class="top-line"></div>
 
         <div class="panel-content">
             <div class="panel-left">
-                <!-- 顶部收藏提醒 -->
+                <!-- 顶部导航提示 -->
                 <div class="nav-notice">
                     <p>务必保存，永久导航域名</p>
                     <strong id="nav-url">yxxq.site</strong>
@@ -136,21 +138,10 @@
                 </div>
                 
                 <div class="panel-box">
-                    <!-- 分享行 -->
-                    <div class="row">
-                        <div class="text">
-                            <p class="p1">分享本发布页给好友 <span class="p1span2">推荐</span></p>
-                            <p class="p2" id="share-url">https://</p> 
-                        </div>
-                        <div class="action-area">
-                            <a id="copy-share-link" href="javascript:;" class="btn-mini-enter" style="background: #00a0ff;">复制链接</a> 
-                        </div>
-                    </div>
-
-                    <!-- 域名列表容器 -->
+                    <!-- 域名动态生成位置 -->
                     <div id="url-list-container"></div>
 
-                    <!-- 居中二维码 -->
+                    <!-- 居中二维码区域 -->
                     <div class="top-line nomp"></div>
                     <div class="qr-section">
                         <img src="img/qr.png" alt="QR" class="qr-img">
@@ -164,9 +155,11 @@
     </div> 
 </div> 
 
+<!-- 引入域名数据 -->
 <script src="js/domains.js"></script>
+
 <script>
-    // 随机打乱数组
+    // 随机打乱算法
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -174,9 +167,9 @@
         }
     }
 
-    // 测速逻辑
+    // 测速函数
     async function runSpeedTest(url, resultSpan) {
-        if (!url.startsWith('http')) return;
+        if (!url || !url.startsWith('http')) return;
         resultSpan.textContent = '测速中';
         resultSpan.className = 'speed-result testing';
         const startTime = performance.now();
@@ -195,28 +188,37 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // 1. 初始化导航复制
+        // 1. 初始化顶部导航复制按钮
         new ClipboardJS('#copy-nav-btn').on('success', () => alert('导航域名 yxxq.site 复制成功！'));
 
-        // 2. 页面分享链接
-        const currentUrl = window.location.href;
-        document.getElementById('share-url').textContent = currentUrl;
-        new ClipboardJS('#copy-share-link', { text: () => currentUrl }).on('success', () => alert('发布页地址已复制'));
-
-        // 3. 动态获取 5 条域名
+        // 2. 获取并渲染 6 个不重复域名
         const container = document.getElementById('url-list-container');
-        if (typeof domainList !== 'undefined' && Array.isArray(domainList)) {
+        
+        if (typeof domainList !== 'undefined' && Array.isArray(domainList) && domainList.length > 0) {
+            // 深拷贝并打乱
             let shuffled = [...domainList];
             shuffleArray(shuffled);
             
-            // 选取前 5 个
-            shuffled.slice(0, 5).forEach((url, index) => {
+            // 获取前 6 个（如果 domainList 不足 6 个则取全部）
+            const count = Math.min(shuffled.length, 6);
+            
+            for (let i = 0; i < count; i++) {
+                const url = shuffled[i];
                 const rowWrapper = document.createElement('div');
+                
+                // 设置标题逻辑
+                let titleHtml = '';
+                if (i === 0) {
+                    titleHtml = `最新域名 <span class="p1span-rec">推荐</span>`;
+                } else {
+                    titleHtml = `备用域名 ${i}`;
+                }
+
                 rowWrapper.innerHTML = `
-                    <div class="top-line nomp"></div>
+                    ${i !== 0 ? '<div class="top-line nomp"></div>' : ''}
                     <div class="row">
                         <div class="text">
-                            <p class="p1">备用网址 ${index + 1} ${index === 0 ? '<span class="p1span">推荐</span>' : ''}</p>
+                            <p class="p1">${titleHtml}</p>
                             <p class="p2">${url}</p>
                         </div>
                         <div class="action-area">
@@ -228,17 +230,18 @@
                 `;
                 container.appendChild(rowWrapper);
                 
-                // 执行测速
+                // 触发测速
                 const span = rowWrapper.querySelector('.speed-result');
                 runSpeedTest(url, span);
-            });
+            }
 
-            // 初始化所有新生成的复制按钮
+            // 3. 初始化动态生成的复制按钮
             new ClipboardJS('.btn-mini-copy').on('success', (e) => {
                 alert('域名复制成功: ' + e.text);
             });
+
         } else {
-            container.innerHTML = '<div class="row"><p style="color:red;text-align:center;width:100%">js/domains.js 加载失败或数据格式错误</p></div>';
+            container.innerHTML = '<p style="color:red; text-align:center; padding:20px;">检测到域名列表为空，请检查 js/domains.js 文件</p>';
         }
     });
 </script>
