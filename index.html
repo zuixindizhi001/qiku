@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>映像星球-永久发布页</title>
+    <!-- 引入外部样式和字体 -->
     <link href="css/normalize.css" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/opposans" rel="stylesheet">
-    <!-- 引入 ClipboardJS 用于复制功能 -->
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/clipboard.min.js"></script>
     <style>
         :root {
@@ -22,174 +22,134 @@
             background-image: radial-gradient(circle at top, #1e254d 0%, #0b0e21 100%);
             font-family: 'Opposans', sans-serif;
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
         }
 
         .container {
-            max-width: 500px;
+            max-width: 550px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* Logo 样式 */
-        .header {
-            margin: 30px 0;
-            text-align: center;
-        }
-        .header img {
-            width: 200px;
-            height: auto;
-        }
-
-        /* 截图风格的永久域名卡片 */
-        .permanent-card {
-            background: rgba(36, 41, 77, 0.7);
-            border: 1px solid rgba(112, 86, 255, 0.3);
-            border-radius: 20px;
-            width: 100%;
-            padding: 25px 0;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .permanent-card .hint {
-            color: var(--text-main);
-            font-size: 16px;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        .permanent-card .domain-name {
-            font-size: 36px;
-            font-weight: bold;
+        /* 顶部保留的窄条样式 */
+        .top-notice-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
             color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            text-shadow: 0 0 15px rgba(112, 86, 255, 0.5);
-        }
-        .btn-copy-main {
-            background: var(--primary-purple);
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 30px;
-            font-size: 16px;
+            text-align: center;
+            margin-top: 10px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            text-decoration: none;
-            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .btn-copy-main:hover {
-            background: #826cff;
-            transform: scale(1.05);
-        }
+        .top-notice-bar span { color: #ffc107; font-weight: bold; text-decoration: underline; }
 
-        /* 域名列表样式 */
+        /* Logo 居中 */
+        .header { margin: 25px 0; text-align: center; }
+        .header img { width: 180px; height: auto; }
+
+        /* 中间紫色大卡片样式 */
+        .permanent-card {
+            background: rgba(30, 35, 70, 0.6);
+            border: 1px solid rgba(112, 86, 255, 0.4);
+            border-radius: 24px;
+            width: 90%;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        .permanent-card .hint { color: #fff; font-size: 15px; margin-bottom: 12px; opacity: 0.9; }
+        .permanent-card .domain-name {
+            font-size: 42px; font-weight: bold; color: #fff;
+            margin-bottom: 25px; letter-spacing: 1px;
+            text-shadow: 0 0 20px rgba(112, 86, 255, 0.6);
+        }
+        .btn-pill {
+            background: var(--primary-purple);
+            color: white; border: none;
+            padding: 12px 45px; border-radius: 30px;
+            font-size: 16px; font-weight: 500;
+            cursor: pointer; transition: all 0.3s;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-pill:hover { background: #826cff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(112,86,255,0.4); }
+
+        /* 域名列表 */
         .domain-list {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 18px;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .domain-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .domain-info .label {
-            font-size: 13px;
-            color: var(--text-dim);
-            margin-bottom: 4px;
-        }
-        .domain-info .url {
-            font-size: 15px;
-            color: #fff;
-            word-break: break-all;
-        }
-        .domain-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .speed {
-            font-size: 11px;
-            font-weight: bold;
-            min-width: 45px;
-            text-align: right;
-        }
+        .domain-item:last-child { border-bottom: none; }
+        .domain-info .label { font-size: 13px; color: var(--text-dim); margin-bottom: 5px; }
+        .domain-info .url { font-size: 15px; color: #fff; font-weight: 500; }
+        
+        .actions { display: flex; align-items: center; gap: 8px; }
+        .speed { font-size: 11px; min-width: 45px; text-align: right; font-weight: bold; }
         .speed.good { color: #00ff88; }
-        .speed.bad { color: #ff4444; }
+        .speed.slow { color: #ffc107; }
+        .speed.fail { color: #ff4444; }
 
-        .btn-small {
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            text-decoration: none;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.1);
+        .btn-sm {
+            padding: 7px 15px; border-radius: 8px; font-size: 12px;
+            text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
         }
-        .btn-enter { background: var(--primary-purple); }
+        .btn-sm.enter { background: var(--primary-purple); }
+        .btn-sm:hover { opacity: 0.8; }
 
         /* 二维码区 */
-        .qr-section {
-            margin-top: 40px;
-            text-align: center;
-        }
+        .qr-section { margin-top: 35px; text-align: center; }
         .qr-section img {
-            width: 140px;
-            height: 140px;
-            padding: 8px;
-            background: #fff;
-            border-radius: 12px;
+            width: 140px; height: 140px; padding: 10px;
+            background: #fff; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        .qr-section p {
-            color: var(--text-dim);
-            font-size: 12px;
-            margin-top: 10px;
-        }
+        .qr-section p { color: var(--text-dim); font-size: 13px; margin-top: 12px; }
 
-        .footer {
-            margin: 40px 0;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 12px;
-        }
-
-        .tag-rec {
-            background: #ffc107;
-            color: #000;
-            font-size: 10px;
-            padding: 1px 4px;
-            border-radius: 3px;
-            margin-left: 5px;
-            vertical-align: middle;
+        .footer { margin: 40px 0; color: rgba(255, 255, 255, 0.2); font-size: 12px; }
+        
+        .tag {
+            background: #ffc107; color: #000; font-size: 10px;
+            padding: 2px 5px; border-radius: 4px; margin-left: 6px;
+            vertical-align: middle; font-weight: bold;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- 顶部窄条 (保留原有样式和功能) -->
+    <div class="top-notice-bar" id="top-bar" data-clipboard-text="yxxq.site">
+        点击复制并保存发布页域名：<span>yxxq.site</span> (建议按 Ctrl+D 收藏)
+    </div>
+
     <!-- Logo 居中 -->
     <div class="header">
         <img src="img/bea51e2dca5dd1ac3e782268ec5303cf.png" alt="映像星球">
     </div>
 
-    <!-- 永久域名卡片（参考截图优化） -->
+    <!-- 中间紫色大卡片 -->
     <div class="permanent-card">
         <div class="hint">务必保存，永久导航域名</div>
         <div class="domain-name">yxxq.site</div>
-        <button class="btn-copy-main" data-clipboard-text="yxxq.site">点击复制并收藏</button>
+        <button class="btn-pill" data-clipboard-text="yxxq.site">点击复制并收藏</button>
     </div>
 
-    <!-- 推荐与备用域名列表 -->
-    <div class="domain-list" id="domain-list">
-        <!-- JS 动态填充内容 -->
-        <div style="padding: 20px; text-align: center; color: #666;">正在加载线路...</div>
+    <!-- 域名列表 -->
+    <div class="domain-list" id="main-list">
+        <div style="padding: 30px; text-align: center; color: var(--text-dim);">加载极速线路中...</div>
     </div>
 
     <!-- 二维码居中 -->
@@ -203,77 +163,83 @@
     </div>
 </div>
 
-<!-- 引入 domains.js -->
+<!-- 重点：先加载数据，再执行逻辑 -->
 <script src="js/domains.js"></script>
 
 <script>
-    // 复制逻辑
-    const clipboard = new ClipboardJS('.btn-copy-main, .btn-small');
+    // 1. 初始化复制功能
+    const clipboard = new ClipboardJS('.btn-pill, .btn-sm, .top-notice-bar');
     clipboard.on('success', function(e) {
         alert('复制成功: ' + e.text);
         e.clearSelection();
     });
 
-    // 测速逻辑
-    async function testSpeed(url, element) {
+    // 2. 测速函数
+    async function checkSpeed(url, id) {
+        const span = document.getElementById(id);
         const start = Date.now();
         try {
-            // 使用 no-cors 模式尝试请求
+            // 使用 fetch 配合 no-cors 模式
             await fetch(url, { mode: 'no-cors', cache: 'no-store' });
-            const duration = Date.now() - start;
-            element.textContent = duration + 'ms';
-            element.classList.add(duration < 500 ? 'good' : 'bad');
+            const ms = Date.now() - start;
+            span.textContent = ms + 'ms';
+            span.className = 'speed ' + (ms < 400 ? 'good' : 'slow');
         } catch (e) {
-            element.textContent = '超时';
-            element.classList.add('bad');
+            span.textContent = '超时';
+            span.className = 'speed fail';
         }
     }
 
-    function initDomains() {
-        const listContainer = document.getElementById('domain-list');
+    // 3. 核心加载逻辑
+    function renderDomains() {
+        const container = document.getElementById('main-list');
         
-        // 检查域名列表是否存在
-        // 兼容处理：如果 domainList 没定义，尝试从 window 中寻找
-        const list = window.domainList || (typeof domainList !== 'undefined' ? domainList : []);
+        // 尝试从多种可能获取 domainList
+        const list = window.domainList || (typeof domainList !== 'undefined' ? domainList : null);
 
-        if (list.length === 0) {
-            listContainer.innerHTML = '<div style="padding:20px; color: #ff4444;">线路加载失败，请刷新或联系客服</div>';
+        if (!list || !Array.isArray(list) || list.length === 0) {
+            container.innerHTML = '<div style="padding:20px; color:#ff4444; text-align:center;">线路获取失败，请尝试刷新页面</div>';
+            console.error('未找到 domainList 变量，请检查 js/domains.js 内容');
             return;
         }
 
-        // 随机洗牌
-        const shuffled = list.sort(() => 0.5 - Math.random());
-        // 取前 6 个
-        const selected = shuffled.slice(0, 6);
+        // 随机抽取线路
+        const shuffled = [...list].sort(() => 0.5 - Math.random());
+        const displayList = shuffled.slice(0, 6);
 
-        listContainer.innerHTML = ''; // 清空加载提示
+        container.innerHTML = ''; // 清空提示
 
-        selected.forEach((url, index) => {
+        displayList.forEach((url, index) => {
             const isFirst = index === 0;
-            const label = isFirst ? '最新域名' : `备用线路 ${index}`;
-            
+            const label = isFirst ? '官方推荐' : `备用线路 ${index}`;
+            const speedId = `speed-${index}`;
+
             const item = document.createElement('div');
             item.className = 'domain-item';
             item.innerHTML = `
                 <div class="domain-info">
-                    <div class="label">${label}${isFirst ? '<span class="tag-rec">推荐</span>' : ''}</div>
+                    <div class="label">${label}${isFirst ? '<span class="tag">极速</span>' : ''}</div>
                     <div class="url">${url}</div>
                 </div>
-                <div class="domain-actions">
-                    <span class="speed" id="speed-${index}">测速中</span>
-                    <a href="javascript:;" class="btn-small" data-clipboard-text="${url}">复制</a>
-                    <a href="${url}" target="_blank" class="btn-small btn-enter">进入</a>
+                <div class="actions">
+                    <span class="speed" id="${speedId}">测试中</span>
+                    <a href="javascript:;" class="btn-sm" data-clipboard-text="${url}">复制</a>
+                    <a href="${url}" target="_blank" class="btn-sm enter">进入</a>
                 </div>
             `;
-            listContainer.appendChild(item);
+            container.appendChild(item);
 
-            // 执行测速
-            testSpeed(url, document.getElementById(`speed-${index}`));
+            // 触发异步测速
+            setTimeout(() => checkSpeed(url, speedId), index * 200);
         });
     }
 
-    // 页面加载完成后执行
-    window.onload = initDomains;
+    // 确保 DOM 加载完后再运行
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderDomains);
+    } else {
+        renderDomains();
+    }
 </script>
 
 </body>
