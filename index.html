@@ -2,259 +2,279 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <meta name="Author" content="Noah">
-    <meta name="Keywords" content="映像星球,发布页,最新地址">
-    <meta name="Description" content="映像星球永久发布页 - 获取最新官网地址。">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="/favicon.ico">
     <title>映像星球-永久发布页</title>
-
     <link href="css/normalize.css" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/opposans" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <!-- 引入 ClipboardJS 用于复制功能 -->
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/clipboard.min.js"></script>
     <style>
-        /* --- 整体布局优化 --- */
-        .page-center { max-width: 800px; margin: 0 auto; float: none; }
-        
-        /* 顶部导航保存 */
-        .top-nav-save {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            text-align: center;
-            padding: 12px;
-            cursor: pointer;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 14px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-        .top-nav-save:hover { background: rgba(255, 255, 255, 0.2); }
-        .top-nav-save b { color: #ffc107; text-decoration: underline; }
-
-        /* Logo 居中 */
-        .header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 0;
-            width: 100%;
-        }
-        .header img {
-            width: 210px;
-            height: auto;
-            display: block;
+        :root {
+            --bg-color: #0b0e21;
+            --card-bg: #1a1e3b;
+            --primary-purple: #7056ff;
+            --text-main: #ffffff;
+            --text-dim: #a0a5ba;
         }
 
-        /* 域名行样式 */
-        .panel-left { width: 100% !important; float: none !important; }
-        .panel-left .panel-box .row {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            gap: 15px;
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top, #1e254d 0%, #0b0e21 100%);
+            font-family: 'Opposans', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
-        .panel-left .panel-box .row .text { flex: 1; min-width: 120px; }
 
-        /* 测速与按钮区域 */
-        .action-area {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .speed-result {
-            font-size: 11px;
-            min-width: 70px;
-            text-align: right;
-            font-weight: bold;
-        }
-        .speed-result.testing { color: #ffc107; }
-        .speed-result.success { color: #28a745; }
-        .speed-result.error   { color: #dc3545; }
-
-        /* 按钮微调 */
-        .btn-copy {
-            background: #6c757d;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-decoration: none;
-        }
-        .btn-enter {
-            background: #007bff;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-decoration: none;
-        }
-        .btn-copy:hover, .btn-enter:hover { opacity: 0.8; color: #fff; }
-
-        /* 二维码居中 */
-        .qr-section {
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 30px;
-            padding-bottom: 30px;
+        }
+
+        /* Logo 样式 */
+        .header {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .header img {
+            width: 200px;
+            height: auto;
+        }
+
+        /* 截图风格的永久域名卡片 */
+        .permanent-card {
+            background: rgba(36, 41, 77, 0.7);
+            border: 1px solid rgba(112, 86, 255, 0.3);
+            border-radius: 20px;
+            width: 100%;
+            padding: 25px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .permanent-card .hint {
+            color: var(--text-main);
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .permanent-card .domain-name {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(112, 86, 255, 0.5);
+        }
+        .btn-copy-main {
+            background: var(--primary-purple);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-copy-main:hover {
+            background: #826cff;
+            transform: scale(1.05);
+        }
+
+        /* 域名列表样式 */
+        .domain-list {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .domain-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .domain-info .label {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+        .domain-info .url {
+            font-size: 15px;
+            color: #fff;
+            word-break: break-all;
+        }
+        .domain-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .speed {
+            font-size: 11px;
+            font-weight: bold;
+            min-width: 45px;
+            text-align: right;
+        }
+        .speed.good { color: #00ff88; }
+        .speed.bad { color: #ff4444; }
+
+        .btn-small {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .btn-enter { background: var(--primary-purple); }
+
+        /* 二维码区 */
+        .qr-section {
+            margin-top: 40px;
+            text-align: center;
         }
         .qr-section img {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
+            padding: 8px;
             background: #fff;
-            padding: 10px;
-            border-radius: 10px;
+            border-radius: 12px;
         }
-        .qr-text {
-            color: #ccc;
-            font-size: 13px;
+        .qr-section p {
+            color: var(--text-dim);
+            font-size: 12px;
             margin-top: 10px;
         }
 
-        @media (max-width: 600px) {
-            .panel-left .panel-box .row { flex-direction: column; align-items: flex-start; }
-            .action-area { width: 100%; justify-content: flex-end; }
+        .footer {
+            margin: 40px 0;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+        }
+
+        .tag-rec {
+            background: #ffc107;
+            color: #000;
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-left: 5px;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
-<div class="page-body">
-    <div class="page-mark"></div>
-    <div class="page-center">
-        <!-- 顶部导航 -->
-        <div class="top-nav-save" id="save-nav">
-            点击复制并保存发布页域名：<b>yxxq.site</b> (建议按 Ctrl+D 收藏)
-        </div>
 
-        <div class="header">
-            <!-- Logo更名并居中 -->
-            <img alt="Logo" src="img/bea51e2dca5dd1ac3e782268ec5303cf.png">
-        </div>
-        
-        <div class="top-line"></div>
-        
-        <div class="panel-content">
-            <div class="panel-left">
-                <div class="title-info">
-                    <div class="title-i"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.477 22 2 17.523 2 12C2 6.47703 6.477 2.00003 12 2.00003C17.523 2.00003 22 6.47703 22 12C22 17.523 17.523 22 12 22Z" stroke="white" stroke-opacity="0.4" stroke-width="2"/></svg></div>
-                    <div class="title-t">官方推荐访问地址</div>
-                </div>
-                
-                <div class="panel-box" id="domain-container">
-                    <!-- 域名行将由 JS 动态生成 -->
-                </div> 
-            </div> 
-        </div>
+<div class="container">
+    <!-- Logo 居中 -->
+    <div class="header">
+        <img src="img/bea51e2dca5dd1ac3e782268ec5303cf.png" alt="映像星球">
+    </div>
 
-        <!-- 二维码固定图片居中 -->
-        <div class="qr-section">
-            <img src="img/qr.png" alt="二维码">
-            <div class="qr-text">扫描二维码，永久获取最新地址</div>
-        </div>
+    <!-- 永久域名卡片（参考截图优化） -->
+    <div class="permanent-card">
+        <div class="hint">务必保存，永久导航域名</div>
+        <div class="domain-name">yxxq.site</div>
+        <button class="btn-copy-main" data-clipboard-text="yxxq.site">点击复制并收藏</button>
+    </div>
 
-        <div class="foot">
-            ©2025 映像星球. All Rights Reserved
-        </div>
-    </div> 
+    <!-- 推荐与备用域名列表 -->
+    <div class="domain-list" id="domain-list">
+        <!-- JS 动态填充内容 -->
+        <div style="padding: 20px; text-align: center; color: #666;">正在加载线路...</div>
+    </div>
+
+    <!-- 二维码居中 -->
+    <div class="qr-section">
+        <img src="img/qr.png" alt="QR">
+        <p>扫描二维码，永久获取最新地址</p>
+    </div>
+
+    <div class="footer">
+        ©2025 映像星球. All Rights Reserved
+    </div>
 </div>
 
+<!-- 引入 domains.js -->
 <script src="js/domains.js"></script>
+
 <script>
-    // 复制功能封装
-    function initClipboard() {
-        const clipboard = new ClipboardJS('.btn-copy, .top-nav-save', {
-            text: function(trigger) {
-                return trigger.getAttribute('data-clipboard-text') || "yxxq.site";
-            }
-        });
-        clipboard.on('success', function(e) {
-            alert('复制成功: ' + e.text + '\n请保存或粘贴到浏览器访问！');
-            e.clearSelection();
-        });
-    }
+    // 复制逻辑
+    const clipboard = new ClipboardJS('.btn-copy-main, .btn-small');
+    clipboard.on('success', function(e) {
+        alert('复制成功: ' + e.text);
+        e.clearSelection();
+    });
 
-    // 随机洗牌算法
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    // 测速函数
-    async function runSpeedTest(url, displayElement) {
-        if (!url.startsWith('http')) return;
-        displayElement.textContent = '测速中...';
-        displayElement.className = 'speed-result testing';
-        
-        const start = performance.now();
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
-        
+    // 测速逻辑
+    async function testSpeed(url, element) {
+        const start = Date.now();
         try {
-            const testUrl = url.split('#')[0] + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
-            await fetch(testUrl, { method: 'HEAD', mode: 'no-cors', signal: controller.signal });
-            const duration = Math.floor(performance.now() - start);
-            displayElement.textContent = duration + 'ms';
-            displayElement.className = 'speed-result success';
+            // 使用 no-cors 模式尝试请求
+            await fetch(url, { mode: 'no-cors', cache: 'no-store' });
+            const duration = Date.now() - start;
+            element.textContent = duration + 'ms';
+            element.classList.add(duration < 500 ? 'good' : 'bad');
         } catch (e) {
-            displayElement.textContent = '超时';
-            displayElement.className = 'speed-result error';
-        } finally {
-            clearTimeout(timeoutId);
+            element.textContent = '超时';
+            element.classList.add('bad');
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        initClipboard();
-
-        const container = document.getElementById('domain-container');
+    function initDomains() {
+        const listContainer = document.getElementById('domain-list');
         
-        // 1. 获取并筛选域名
-        if (typeof domainList === 'undefined' || domainList.length === 0) {
-            container.innerHTML = '<div class="row">域名列表加载失败</div>';
+        // 检查域名列表是否存在
+        // 兼容处理：如果 domainList 没定义，尝试从 window 中寻找
+        const list = window.domainList || (typeof domainList !== 'undefined' ? domainList : []);
+
+        if (list.length === 0) {
+            listContainer.innerHTML = '<div style="padding:20px; color: #ff4444;">线路加载失败，请刷新或联系客服</div>';
             return;
         }
 
-        // 2. 随机抽取6个
-        let selectedDomains = shuffleArray([...domainList]).slice(0, 6);
+        // 随机洗牌
+        const shuffled = list.sort(() => 0.5 - Math.random());
+        // 取前 6 个
+        const selected = shuffled.slice(0, 6);
 
-        // 3. 生成 HTML
-        selectedDomains.forEach((domain, index) => {
+        listContainer.innerHTML = ''; // 清空加载提示
+
+        selected.forEach((url, index) => {
             const isFirst = index === 0;
-            const label = isFirst ? '最新域名<span class="p1span2">推荐</span>' : `备用域名 ${index}`;
-            const row = document.createElement('div');
-            row.className = 'row';
-            if (index > 0) {
-                const line = document.createElement('div');
-                line.className = 'top-line nomp';
-                container.appendChild(line);
-            }
-
-            row.innerHTML = `
-                <div class="text">
-                    <p class="p1">${label}</p>
-                    <p class="p2">${domain}</p>
+            const label = isFirst ? '最新域名' : `备用线路 ${index}`;
+            
+            const item = document.createElement('div');
+            item.className = 'domain-item';
+            item.innerHTML = `
+                <div class="domain-info">
+                    <div class="label">${label}${isFirst ? '<span class="tag-rec">推荐</span>' : ''}</div>
+                    <div class="url">${url}</div>
                 </div>
-                <div class="action-area">
-                    <span class="speed-result">-- ms</span>
-                    <a href="javascript:;" class="btn-copy" data-clipboard-text="${domain}">复制</a>
-                    <a href="${domain}" target="_blank" class="btn-enter">进入</a>
+                <div class="domain-actions">
+                    <span class="speed" id="speed-${index}">测速中</span>
+                    <a href="javascript:;" class="btn-small" data-clipboard-text="${url}">复制</a>
+                    <a href="${url}" target="_blank" class="btn-small btn-enter">进入</a>
                 </div>
             `;
-            container.appendChild(row);
+            listContainer.appendChild(item);
 
-            // 4. 执行测速
-            const speedSpan = row.querySelector('.speed-result');
-            setTimeout(() => runSpeedTest(domain, speedSpan), index * 300);
+            // 执行测速
+            testSpeed(url, document.getElementById(`speed-${index}`));
         });
+    }
 
-        // 顶部导航复制功能补充
-        document.getElementById('save-nav').setAttribute('data-clipboard-text', 'yxxq.site');
-    });
+    // 页面加载完成后执行
+    window.onload = initDomains;
 </script>
+
 </body>
 </html>
